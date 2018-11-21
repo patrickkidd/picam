@@ -33,7 +33,7 @@ class CaptureThread(threading.Thread):
                 break
 
             GET_URL = 'http://dbs.digiscura.com/PiCamArray/'
-            Debug(GET_URL)
+            # Debug(GET_URL)
             startTime = time.time()
             r = requests.get(GET_URL)
             endTime = time.time()
@@ -103,10 +103,9 @@ def main():
             with open(options.pidfile, 'r') as f:
                 try:
                     pid = int(f.read())
-                    Debug(pid)
                     os.kill(pid, 0)
                 except: # ProcessLookupError: process not running, ValueError: contents not an integer
-                    Debug('removing pid file', options.pidfile)
+                    Debug('removing stale pid file', options.pidfile)
                     os.remove(options.pidfile) # process is not running anymore, must have errored out
                 else:
                     Debug('Server already running; quitting....')
